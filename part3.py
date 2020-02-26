@@ -14,6 +14,7 @@ def getSortedArray(n):
     print(lst)
     return lst
 
+#Test Case
 lst = getRandomArray(2000)
 print(lst)
 getSortedArray(30)
