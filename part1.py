@@ -144,13 +144,17 @@ def insertIter(root,data,parent=None):
     return
 
 def deleteIter(root,index):
+    isNone = False
     if root == None:
-        return
+        return root
     current = root
+    path = []
     while current != None:
         if current.data > index:
+            path.insert(0,current)
             current = current.leftChild
         elif current.data < index:
+            path.insert(0,current)
             current = current.rightChild
         else:
             if current.data != index:
@@ -159,25 +163,46 @@ def deleteIter(root,index):
             break
     while current != None:
         if current.leftChild == None and current.rightChild == None:
-            print("AGGG")
+            path.insert(0,current)
             current = None
+            isNone = True
         elif current.leftChild == None:
-            right = current
+            current.rightChild.parent = current.parent
             current = current.rightChild
-            current.parent = right.parent
-            current.rightChild = None
-        elif root.rightChild == None:
-            left = current
+            break
+        elif current.rightChild == None:
+            current.leftChild.parent = current.parent
             current = current.leftChild
-            current.parent = left.parent
-            current.leftChild = None
+            break
         else:
             lst = inOrderIter(root)
             i = lst.index(current)
             min = lst[i+1]
             min.parent = current.parent
-            current = min
-            min = None
+            temp = current
+            temp = min
+            current = min.rightChild
+            path.insert(0,current)
+    while len(path) > 0:
+        if isNone == False:
+            temp = current
+            pathNode = path.pop(0)
+            if pathNode.data > temp.data:
+                pathNode.leftChild = temp
+            elif pathNode.data < temp.data:
+                pathNode.rightChild = temp
+            current = pathNode
+            temp = current
+        else:
+            leaf = path.pop(0)
+            pathNode = path.pop(0)
+            if pathNode.data > leaf.data:
+                pathNode.leftChild = None
+            elif pathNode.data < leaf.data:
+                pathNode.rightChild = None
+            current = pathNode
+            isNone = False
+
 
 def findNextIter(root):
     if root == None:
@@ -254,7 +279,7 @@ insertRec(root,43,root)
 insertRec(root,3,root)
 for i in inOrderIter(root):
     print(i.data)
-deleteRec(root,27)
+deleteIter(root,3)
 insertIter(root,100,root)
 insertIter(root,1,root)
 print("\n")
