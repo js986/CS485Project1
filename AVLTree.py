@@ -1,4 +1,4 @@
-import part3
+import ArraysOfIntegers as part3
 class Node:
     def __init__ (self,data,parent):
         self.data = data
@@ -142,7 +142,7 @@ class AVLTree:
             return self.findMinInSubTree(node.rightChild)
         current = node
         while current.parent != None:
-            if current.parent > node.data:
+            if current.parent.data > node.data:
                 return current.parent
             current = current.parent
             self.traversalCounter+=1
@@ -152,7 +152,7 @@ class AVLTree:
             return self.findMaxInSubTree(node.leftChild)
         current = node
         while current.parent != None:
-            if current.parent < node.data:
+            if current.parent.data < node.data:
                 return current.parent
             current = current.parent
             self.traversalCounter+=1
@@ -330,14 +330,14 @@ tree.insertIter(95)
 tree.insertIter(78)
 tree.printTree(tree.root)
 """
-lst = part3.getRandomArray(10000)
+#lst = part3.getRandomArray(10000)
 #lst = part3.getSortedArray(10000)
 #print(lst)
-root = Node(lst[0],None)
-tree = AVLTree(root)
-for i in range(1,len(lst)):
-    tree.insertIter(lst[i])
+#root = Node(lst[0],None)
+#tree = AVLTree(root)
+#for i in range(1,len(lst)):
+#    tree.insertIter(lst[i])
 
-print(tree.traversalCounter)
+#print(tree.traversalCounter)
 #tree.printTree(tree.root)
 #print(tree.root.leftChild)
