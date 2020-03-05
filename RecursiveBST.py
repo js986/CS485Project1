@@ -11,7 +11,7 @@ class RecBST:
 
     def insertRec(self,root,data):
         if root == None:
-            root = Node(data)
+            root = Node(data,None)
             return root
         elif root.data > data:
             root.leftChild = self.insertRec(root.leftChild,data)
